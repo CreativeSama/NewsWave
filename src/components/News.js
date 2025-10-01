@@ -16,7 +16,8 @@ const News = (props)=>{
 
     const updateNews = async ()=> {
         props.setProgress(10);
-        const url = `https://gnews.io/api/v4/top-headlines?lang=en&country=${props.country}&topic=${props.category}&token=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`; 
+        // This is the correct URL that calls your Netlify Function
+        const url = `/.netlify/functions/getNews?country=${props.country}&topic=${props.category}&page=${page}&pageSize=${props.pageSize}`; 
         setLoading(true)
         let data = await fetch(url);
         props.setProgress(30);
@@ -35,7 +36,8 @@ const News = (props)=>{
     }, [])
 
     const fetchMoreData = async () => {   
-        const url = `https://gnews.io/api/v4/top-headlines?lang=en&country=${props.country}&topic=${props.category}&token=${props.apiKey}&page=${page+1}&pageSize=${props.pageSize}`;
+        // This is the correct URL for the infinite scroll
+        const url = `/.netlify/functions/getNews?country=${props.country}&topic=${props.category}&page=${page+1}&pageSize=${props.pageSize}`;
         setPage(page+1) 
         let data = await fetch(url);
         let parsedData = await data.json()
@@ -50,10 +52,8 @@ const News = (props)=>{
                 <InfiniteScroll
                     dataLength={articles.length}
                     next={fetchMoreData}
-                    // 1. Changed the condition to be more robust
                     hasMore={articles.length < totalResults} 
                     loader={<Spinner/>}
-                    // 2. Added a message to show when all articles have been loaded
                     endMessage={
                         <p style={{ textAlign: 'center' }}>
                           <b>You have seen it all!</b>
@@ -73,7 +73,6 @@ const News = (props)=>{
             </>
         )
 }
-
 
 News.defaultProps = {
     country: 'in',
