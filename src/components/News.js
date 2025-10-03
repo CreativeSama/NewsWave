@@ -16,7 +16,7 @@ const News = (props)=>{
 
     const updateNews = async ()=> {
         props.setProgress(10);
-        // This is the correct URL that calls your Netlify Function
+        
         const url = `/.netlify/functions/getNews?country=${props.country}&topic=${props.category}&page=${page}&pageSize=${props.pageSize}`; 
         setLoading(true)
         let data = await fetch(url);
@@ -36,7 +36,7 @@ const News = (props)=>{
     }, [])
 
     const fetchMoreData = async () => {   
-        // This is the correct URL for the infinite scroll
+        
         const url = `/.netlify/functions/getNews?country=${props.country}&topic=${props.category}&page=${page+1}&pageSize=${props.pageSize}`;
         setPage(page+1) 
         let data = await fetch(url);
