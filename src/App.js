@@ -8,7 +8,6 @@ import BackToTopButton from './components/BackToTopButton';
 
 const App = () => {
   const pageSize = 5;
-  // Changed to read the new GNews API key from your .env.local file
   const apiKey = process.env.REACT_APP_GNEWS_API_KEY; 
   const [progress, setProgress] = useState(0);
 
